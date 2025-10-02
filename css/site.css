@@ -1,9 +1,10 @@
 body {
-  background: #000;
-  color: #e0e0e0;
-  font-family: 'Courier New', monospace;
-  text-align: center;
-  padding: 2rem;
+  background: #000;           
+  display: flex;
+  flex-direction: column;
+  align-items: center;       
+  justify-content: flex-start;
+  min-height: 100vh;
 }
 
 #game {
@@ -11,26 +12,120 @@ body {
   margin: auto;
 }
 
-button {
-  background: #111;
-  color: #e0e0e0;
-  border: 1px solid #e00;
-  padding: 10px;
-  margin: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #e00;
-  color: #000;
-}
-
 #title {
   animation: flicker 2s infinite;
+  font-size: 50px;
+  font-family: 'Courier New', Courier, monospace;
+  color:#e0e0e0;
+  text-align: center;
 }
 
 @keyframes flicker {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.8; }
   70% { opacity: 0.5; }
+}
+
+#story {
+  text-align: center;        
+  font-size: 1.8rem;         
+  max-width: 800px;         
+  margin: 100px auto 40px;    
+  line-height: 1.6;         
+  font-family: 'Courier New', monospace; 
+  color: #fff;              
+}
+
+#choices {
+  display: flex;             
+  flex-direction: row;     
+  align-items: center;        
+  gap: 12px;               
+  margin: 20px auto;         
+  width: 100%;              
+  text-align: center;         
+}
+
+#choices button {
+  position: relative;
+  background: none;
+  border: 1px solid #800;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  cursor: pointer;
+  max-width: 300px;
+  text-transform: uppercase;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+}
+
+#choices button:hover {
+  color: #ff0000;
+  border-color: #ff0000;
+  letter-spacing: 0.1em;
+}
+
+#choices button::before,
+#choices button::after {
+  content: attr(data-text); 
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  color: #ff0000;
+  clip: rect(0, 0, 0, 0);
+}
+
+#choices button::after {
+  top: 0;
+  left: -2px;
+  text-shadow: -2px 0 crimson;
+  animation: glitchBottom 1.2s infinite linear alternate-reverse;
+}
+
+#choices button:hover::before,
+#choices button:hover::after {
+  clip: auto;
+}
+
+@keyframes glitchTop {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  10% { clip: rect(0, 9999px, 50%, 0); }
+  20% { clip: rect(0, 9999px, 10%, 0); }
+  30% { clip: rect(0, 9999px, 80%, 0); }
+  40% { clip: rect(0, 9999px, 30%, 0); }
+  50% { clip: rect(0, 9999px, 90%, 0); }
+  60% { clip: rect(0, 9999px, 40%, 0); }
+  70% { clip: rect(0, 9999px, 70%, 0); }
+  80% { clip: rect(0, 9999px, 20%, 0); }
+  90% { clip: rect(0, 9999px, 60%, 0); }
+  100% { clip: rect(0, 9999px, 0, 0); }
+}
+
+@keyframes glitchBottom {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  10% { clip: rect(60%, 9999px, 100%, 0); }
+  20% { clip: rect(10%, 9999px, 100%, 0); }
+  30% { clip: rect(30%, 9999px, 100%, 0); }
+  40% { clip: rect(20%, 9999px, 100%, 0); }
+  50% { clip: rect(50%, 9999px, 100%, 0); }
+  60% { clip: rect(40%, 9999px, 100%, 0); }
+  70% { clip: rect(70%, 9999px, 100%, 0); }
+  80% { clip: rect(20%, 9999px, 100%, 0); }
+  90% { clip: rect(80%, 9999px, 100%, 0); }
+  100% { clip: rect(0, 9999px, 100%, 0); }
+}
+
+#credits {
+  position: fixed;       
+  bottom: 10px;         
+  left: 0;
+  width: 100%;           
+  text-align: center;    
+  font-size: 14px;       
+  color: #888;           
+  font-family: monospace;
+  opacity: 0.8;
+  pointer-events: none;  
 }
