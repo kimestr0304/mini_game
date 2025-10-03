@@ -1,7 +1,7 @@
 //* Kimberly Estarda
 //* Art 170 - Solo Prototype
 //* I used Chat GPT and Wesbot to help run the code smoothly, I am responsible for the storyline.
-//* This is an experiment with HTML and JS in creating a decent story narrative while using a playable media.
+//* This is an experiment with HTML and JS in creating a decent story narrative to create a playable media to help set a "choose your adventure" game.
 
 const storyText = document.getElementById("story");
 flickerText(storyText);
@@ -10,37 +10,38 @@ const choicesDiv = document.getElementById("choices");
 // Track how many times each scene is visited
 const visited = {};
 
+// Story Scenes
 const story = {
   start: {
-    text: "You wake up in a room with the smell of rust and decay filling your nose. You have no idea how you got here, but a door creaks open. A dark, cold hallway stares back at you.",
+    text: "You wake up in a dark, abandoned room. The smell of rust and decay fills your nose. You have no idea how you got here, but a door creaks open. A dark, cold hallway stares back at you.",
     choices: [
       { text: "Go through the door", next: "hallway" },
       { text: "Stay where you are", next: "stay" }
     ]
   },
   hallway: {
-    text: "The hallway stretches far beyond what's possible. Every step you take, the light behind you fades, and the dark ahead seems to *breathe*. Something knows you're here and it's getting closer.",
+    text: "The hallway stretches far beyond what's possible. Every step you take has no end, the dark ahead seems to *breathe*. Something knows you're here and it's getting closer.",
     choices: [
       { text: "Run, now", next: "run" },
       { text: "Freeze. Maybe it won't see you", next: "panic" }
     ]
   },
   stay: {
-    text: "You sit in silence. Your name drips from the darkness — not spoken, but *remembered*. It sounds familiar with the way it calls to you.",
+    text: "You sit in silence. Your name drips from the darkness — not spoken, but *remembered*. It sounds familiar with the way it calls out to you.",
     choices: [
       { text: "Call out", next: "call" },
       { text: "Stay still", next: "panic" }
     ]
   },
   call: {
-    text: "\"Who are you?! What do you want from me?! I don't know what's going on!\"",
+    text: "\"Who are you?! What do you want from me?! Why am I here?!\"",
     choices: [
       { text: "Keep running, don't stop", next: "run" },
       { text: "Scream, nothing matters now", next: "scream" }
     ]
   },
   run: {
-    text: "Your footsteps echo… but so do *theirs*. Something is following. It's close.",
+    text: "Your footsteps echo… but so do *theirs*. Something is following. Don't stop. Keep going.",
     choices: [
       { text: "Hide in a room", next: "hide" },
       { text: "Keep running", next: "bolt" }
@@ -60,26 +61,26 @@ const story = {
     ]
   },
   bolt: {
-    text: "Running won't help. Your path has no end.",
+    text: "Running won't help. Your path has no end, remember.",
     choices: [
-      { text: "*Gasp*", next: "stand" }
+      { text: "*Gasp*", next: "move" }
     ]
   },
   hide: {
-    text: "The room is filled with a sour, wet smell. You hide inside an old, rundown dresser. Cross your fingers. Hope nothing finds you.",
+    text: "The room is filled with a sour, wet smell. You hide inside an old, rundown dresser. Cross your fingers. Hope you found a good hiding spot.",
     choices: [
       { text: "Cover your mouth, don't make a sound", next: "gasp" },
-      { text: "You moved!? Why!?", next: "move" }
+      { text: "*BANG*", next: "move" }
     ]
   },
   gasp: {
-    text: "The floor creaks — it's leading towards the dresser. A shadow makes its way to you. Breathing fills the room, its not yours tho...",
+    text: "The floor creaks — it's headed towards the dresser. A shadow makes its way to you. Breathing fills the room, its not yours tho...",
     choices: [
       { text: "...", next: "stand" }
     ]
   },
   move: {
-    text: "There's nothing you can do now... You're done...",
+    text: "There's nothing you can do now... You're done... *It's* coming...",
     choices: [
       { text: "\"*SOB*\"", next: "stand" }
     ]
@@ -104,7 +105,6 @@ const story = {
   }
 };
 
-
 // Show a scene
 function showScene(sceneKey) {
   visited[sceneKey] = (visited[sceneKey] || 0) + 1;
@@ -117,21 +117,14 @@ function showScene(sceneKey) {
   }
 
   // Corrupt text slightly if visited repeatedly
-  if (visited[sceneKey] > 2) {
+  if (visited[sceneKey] > 1) {
     displayText = displayText.replace(/you/gi, "𝔶𝔬𝔲").replace(/I/gi, "👁");
   }
-  if (visited[sceneKey] > 4) {
-    displayText = "▌The words don’t stay still anymore. ▌They are leaking. ▌You should not be here.";
+  if (visited[sceneKey] > 2) {
+    displayText = "▌The words don’t stay still anymore. ▌You need to leave. ▌You should not be here.";
   }
 
   storyText.innerText = displayText;
-
-  // Mutate text a few seconds later
-  setTimeout(() => {
-    if (Math.random() < 0.4) {
-      storyText.innerText = storyText.innerText.replace(/\./g, "…").replace(/ /g, "  ");
-    }
-  }, 3000);
 
   // Apply flicker effect
   flickerText(storyText);
@@ -172,7 +165,6 @@ function flickerText(element) {
     const opacity = Math.random() * 0.4 + 0.6;
     element.style.opacity = opacity;
 
-    // Occasionally tint text red/purple
     if (Math.random() < 0.1) {
       element.style.color = `hsl(${Math.random() * 20 + 340}, 70%, 70%)`;
     } else {
@@ -180,3 +172,29 @@ function flickerText(element) {
     }
   }, Math.random() * 200 + 200);
 }
+
+document.getElementById("startBtn").addEventListener("click", () => {
+  document.getElementById("intro").style.display = "none";
+  const bgSound = document.getElementById("bg-sound");
+  bgSound.volume = 0.3;
+  bgSound.play();
+});
+
+document.body.addEventListener("click", () => {
+  bgSound.play();
+  startWhispers();
+}, { once: true });
+
+const bgSound = document.getElementById("bg-sound");
+window.addEventListener("load", () => {
+  bgSound.volume = 0.3;
+  bgSound.play().catch(e => console.log("Audio blocked until user interaction"));
+});
+
+setInterval(() => {
+  if (Math.random() < 0.2) { 
+    const whisper = new Audio("mp3/whispers.mp3");
+    whisper.volume = 0.3;
+    whisper.play();
+  }
+}, 10000);

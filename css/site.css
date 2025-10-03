@@ -39,11 +39,11 @@ body {
 #choices {
   display: flex;             
   flex-direction: row;     
-  align-items: center;        
+  align-content: center; 
+  justify-content: center;       
   gap: 12px;               
   margin: 20px auto;         
-  width: 100%;              
-  text-align: center;         
+  width: 100%;                    
 }
 
 #choices button {
@@ -58,6 +58,7 @@ body {
   text-transform: uppercase;
   transition: color 0.2s ease, border-color 0.2s ease;
   overflow: hidden;
+  text-align: center;   
 }
 
 #choices button:hover {
@@ -80,7 +81,7 @@ body {
 #choices button::after {
   top: 0;
   left: -2px;
-  text-shadow: -2px 0 crimson;
+  text-shadow: -2px 0 whitesmoke;
   animation: glitchBottom 1.2s infinite linear alternate-reverse;
 }
 
@@ -128,4 +129,31 @@ body {
   font-family: monospace;
   opacity: 0.8;
   pointer-events: none;  
+}
+
+#intro {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  flex-direction: column;
+}
+
+#startBtn {
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  background: transparent;
+  border: 2px solid white;
+  color: crimson;
+  cursor: pointer;
+  transition: 0.3s;
+  animation: flicker 2s infinite;
+}
+
+#startBtn:hover {
+  background: black;
+  color: black;
 }
