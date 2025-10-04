@@ -36,12 +36,12 @@ const story = {
   call: {
     text: "\"Who are you?! What do you want from me?! Why am I here?!\"",
     choices: [
-      { text: "Keep running, don't stop", next: "run" },
+      { text: "Panic, what more can you do", next: "panic" },
       { text: "Scream, nothing matters now", next: "scream" }
     ]
   },
   run: {
-    text: "Your footsteps echo… but so do *theirs*. Something is following. Don't stop. Keep going.",
+    text: "Your footsteps echo… but so do *theirs*. Something is following. Don't stop. Keep moving.",
     choices: [
       { text: "Hide in a room", next: "hide" },
       { text: "Keep running", next: "bolt" }
@@ -50,7 +50,7 @@ const story = {
   panic: {
     text: "You stand still, frozen. It’s behind you now. You *let* it come this close. You *wanted* this, didn’t you?",
     choices: [
-      { text: "Scream", next: "scream" },
+      { text: "*Scream*", next: "scream" },
       { text: "Deny it", next: "deny" }
     ]
   },
@@ -82,7 +82,7 @@ const story = {
   move: {
     text: "There's nothing you can do now... You're done... *It's* coming...",
     choices: [
-      { text: "\"*SOB*\"", next: "stand" }
+      { text: "*SOB*", next: "stand" }
     ]
   },
   scream: {
@@ -138,7 +138,7 @@ function showScene(sceneKey) {
     let btnText = choice.text;
     if (choice.text === "Start Over") btnText = "It won’t matter.";
     if (Math.random() < 0.1) btnText = "Are you sure this is you?";
-    if (Math.random() < 0.05) btnText = "▌▌▌";
+    if (Math.random() < 0.05) btnText = "👁👁👁";
 
     btn.innerText = btnText;
     btn.setAttribute("data-text", btnText);
@@ -162,7 +162,7 @@ showScene("start");
 // Flickering + subtle color changes
 function flickerText(element) {
   setInterval(() => {
-    const opacity = Math.random() * 0.4 + 0.6;
+    const opacity = Math.random() * 0.9 + 0.7;
     element.style.opacity = opacity;
 
     if (Math.random() < 0.1) {
