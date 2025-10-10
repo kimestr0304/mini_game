@@ -1,6 +1,6 @@
 //* Kimberly Estarda
 //* Art 170 - Solo Prototype
-//* I used Chat GPT and Wesbot to help run the code smoothly, I am responsible for the storyline and the layout.
+//* I used Chat GPT and Wesbot to help run the code smoothly, I am responsible for the storyline and image designs.
 //* This is an experiment with HTML and JS in creating a decent story narrative in a playable media to help set a "choose your adventure" game.
 
 const storyText = document.getElementById("story");
@@ -45,7 +45,7 @@ const story = {
   },
   run: {
     image: "./img/run.png",
-    text: "Your footsteps echo… but so do *theirs*. Something is following. Don't stop. Keep moving.",
+    text: "Your footsteps echo… but so do *theirs*. Something is following. DON'T STOP. Keep moving.",
     choices: [
       { text: "Hide in a room", next: "hide" },
       { text: "Keep running", next: "bolt" }
@@ -132,7 +132,7 @@ function showScene(sceneKey) {
     displayText = displayText.replace(/you/gi, "𝔶𝔬𝔲").replace(/I/gi, "👁").replace(/t/gi, "☠︎︎");
   }
   if (visited[sceneKey] > 2) {
-    displayText = "▌The words don’t stay still anymore. ▌You need to leave. ▌You should not be here.";
+    displayText = "▌The words won’t stay still anymore. ▌You need to leave. ▌You should not be here.";
   }
 
   storyText.innerText = displayText;
